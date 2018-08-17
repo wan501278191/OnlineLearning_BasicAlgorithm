@@ -45,14 +45,17 @@ class TG(object):
         g = self.decisionFunc.grad(y, y_hat, x)
 
         if step % self.K == 0:
+
+           learning_rate = self.alpha / np.sqrt(step+1) # damping step size
+
            temp_lambda = self.K * self.lambda_
 
            for i in range(4):
-              w_e_g = self.w[i] - self.alpha * g[i]
+              w_e_g = self.w[i] -learning_rate * g[i]
               if (0< w_e_g <self.theta) :
-                  self.w[i] = max(0, w_e_g - self.alpha * temp_lambda)
+                  self.w[i] = max(0, w_e_g - learning_rate * temp_lambda)
               elif (-self.theta< w_e_g <0) :
-                  self.w[i] = max(0, w_e_g + self.alpha * temp_lambda)
+                  self.w[i] = max(0, w_e_g + learning_rate * temp_lambda)
               else:
                   self.w[i] = w_e_g
         else:

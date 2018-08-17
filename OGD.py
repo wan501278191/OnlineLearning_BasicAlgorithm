@@ -37,11 +37,12 @@ class OGD(object):
     def predict(self, x):
         return self.decisionFunc.fn(self.w, x)
 
-    def update(self, x, y):
+    def update(self, x, y,step):
         y_hat = self.predict(x)
         g = self.decisionFunc.grad(y, y_hat, x)
+        learning_rate = self.alpha / np.sqrt(step + 1)  # damping step size
         # SGD Update rule theta = theta - learning_rate * gradient
-        self.w = self.w - self.alpha * g
+        self.w = self.w - learning_rate * g
         return self.decisionFunc.loss(y,y_hat)
 
     def training(self, trainSet, max_itr=100000):
@@ -53,7 +54,7 @@ class OGD(object):
             for var in trainSet:
                 x= var[:4]
                 y= var[4:5]
-                loss = self.update(x, y)
+                loss = self.update(x, y,n)
 
                 all_loss.append(loss)
                 all_step.append(n)

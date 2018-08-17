@@ -29,19 +29,28 @@ class LR(object):
 
 class FOBOS(object):
 
-    def __init__(self,alpha,decisionFunc=LR):
-        self.alpha = alpha
-        self.w = np.zeros(4)
-        self.decisionFunc = decisionFunc
+    def __init__(self,K,alpha,lambda_,decisionFunc=LR):
+        self.K = K #to zero after every K online steps
+        self.alpha = alpha # learning rate
+        self.lambda_ = lambda_ #
+        self.w = np.zeros(4) # param
+        self.decisionFunc = decisionFunc #decision Function
 
     def predict(self, x):
         return self.decisionFunc.fn(self.w, x)
 
-    def update(self, x, y):
+    def update(self, x, y, step):
         y_hat = self.predict(x)
         g = self.decisionFunc.grad(y, y_hat, x)
-        # SGD Update rule theta = theta - learning_rate * gradient
-        self.w = self.w - self.alpha * g
+
+        learning_rate = self.alpha / np.sqrt(step + 1)  # damping step size
+        learning_rate_p = self.alpha / np.sqrt(step + 2)  # damping step size
+
+
+        for i in range(4):
+            w_e_g = self.w[i] - learning_rate * g[i]
+            self.w[i] = np.sign(w_e_g)  *  max(0.,np.abs(w_e_g)-learning_rate_p * self.lambda_)
+
         return self.decisionFunc.loss(y,y_hat)
 
     def training(self, trainSet, max_itr=100000):
@@ -53,7 +62,7 @@ class FOBOS(object):
             for var in trainSet:
                 x= var[:4]
                 y= var[4:5]
-                loss = self.update(x, y)
+                loss = self.update(x, y, n)
 
                 all_loss.append(loss)
                 all_step.append(n)
@@ -68,7 +77,7 @@ class FOBOS(object):
 if __name__ ==  '__main__':
 
     trainSet = np.loadtxt('Data/FTRLtrain.txt')
-    FOBOS = FOBOS(alpha=0.01)
+    FOBOS = FOBOS(K=5, alpha=0.01, lambda_=1.)
     all_loss, all_step = FOBOS.training(trainSet,  max_itr=100000)
     w = FOBOS.w
     print(w)
@@ -91,4 +100,6 @@ if __name__ ==  '__main__':
     plt.ylabel('loss')
     plt.plot(all_step, all_loss)
     plt.show()
+
+
 
