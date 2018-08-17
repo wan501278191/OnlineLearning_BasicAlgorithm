@@ -16,9 +16,7 @@ learning_rate = 0.001
 training_epochs = 50
 batch_size = 100
 display_step = 1
-tg_theta = 0.001
-clip_value_min = -0.001
-clip_value_max = 0.001
+
 
 # tf Graph Input
 x = tf.placeholder(tf.float32, [None, 784])  # mnist data image of shape: 28*28=784

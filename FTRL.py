@@ -9,6 +9,7 @@ import random
 import numpy as np
 import tensorflow as tf
 
+# logistic regression
 class LR(object):
 
     @staticmethod
@@ -17,12 +18,13 @@ class LR(object):
         return 1.0 / (1.0 + np.exp(-w.dot(x)))
 
     @staticmethod
-    def loss(y,y_hat):
+    def loss(y, y_hat):
         '''cross-entropy loss function'''
         return np.sum(np.nan_to_num(-y * np.log(y_hat) - (1-y)*np.log(1-y_hat)))
 
     @staticmethod
     def grad(y, y_hat, x):
+        '''gradient function'''
         return (y_hat - y) * x
 
 class FTRL(object):
@@ -61,9 +63,9 @@ class FTRL(object):
         all_loss = []
         all_step = []
         while True:
-            for v in trainSet:
-                x = v[:4]
-                y = v[4:5]
+            for var in trainSet:
+                x= var[:4]
+                y= var[4:5]
                 loss = self.update(x, y)
 
                 all_loss.append(loss)
@@ -77,6 +79,7 @@ class FTRL(object):
                     return all_loss, all_step
 
 if __name__ ==  '__main__':
+
     d = 4
     trainSet = np.loadtxt('Data/FTRLtrain.txt')
     train_x = trainSet[:, 3]
@@ -89,19 +92,19 @@ if __name__ ==  '__main__':
     testSet = np.loadtxt('Data/FTRLtest.txt')
     correct = 0
     wrong = 0
-    for v in testSet:
-        x = v[:4]
-        y = v[4:5]
+    for var in testSet:
+        x = var[:4]
+        y = var[4:5]
         y_hat = 1.0 if ftrl.predict(x) > 0.5 else 0.0
         if y == y_hat:
             correct += 1
         else:
             wrong += 1
-    print("correct ratio:", 1.0 * correct / (correct + wrong), "correct:", correct, "wrong:", wrong)
+    print("correct ratio:", 1.0 * correct / (correct + wrong), "\t correct:", correct, "\t wrong:", wrong)
 
-
+    plt.title('FTRL')
     plt.xlabel('training_epochs')
     plt.ylabel('loss')
-    plt.plot(all_step,all_loss)
+    plt.plot(all_step, all_loss)
     plt.show()
 
