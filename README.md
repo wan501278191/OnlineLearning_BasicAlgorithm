@@ -8,4 +8,5 @@ Online Learning code: TG -> FOBOS -> RDA ->FTRL ->FTPRL -> FTML
 > { Regularized Dual Averaging } Algorithm: [RDA.py](https://github.com/YEN-GitHub/OnlineLearning_BasicAlgorithm/blob/master/RDA.py) <br>
 > { Follow-the-regularized-Leader } Algorithm: [FTRL.py](https://github.com/YEN-GitHub/OnlineLearning_BasicAlgorithm/blob/master/FTRL.py) <br>
 > { Follow-the-regularized-Leader based on Tensorflow } Algorithm: [FTRL_Optimizer.py](https://github.com/YEN-GitHub/OnlineLearning_BasicAlgorithm/blob/master/FTRL_Optimizer.py) <br>
+> { Follow the Moving Leader } Algorithm: [FTML.py](https://github.com/YEN-GitHub/OnlineLearning_BasicAlgorithm/blob/master/FTML.py) <br>
 
