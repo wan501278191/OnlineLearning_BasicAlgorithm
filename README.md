@@ -1,5 +1,7 @@
 # OnlineLearning_BasicAlgorithm
-Online Learning code: TG -> FOBOS -> RDA ->FTRL -> FTML 
+Online Learning code: <br>
+principal line: sparsity <br>
+Algorithm: TG -> FOBOS -> RDA ->FTRL -> FTML 
 
 ## Algorithm list:
 > { Online gradient descent } Algorithm: [OGD.py](https://github.com/YEN-GitHub/OnlineLearning_BasicAlgorithm/blob/master/OGD.py) <br>
