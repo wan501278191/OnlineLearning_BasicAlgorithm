@@ -57,8 +57,8 @@ class FTRL(object):
         return self.decisionFunc.loss(y,y_hat)
 
     def training(self, trainSet, max_itr):
-        n = 0
 
+        n = 0
         all_loss = []
         all_step = []
         while True:
@@ -81,7 +81,7 @@ if __name__ ==  '__main__':
 
     d = 4
     trainSet = np.loadtxt('Data/FTRLtrain.txt')
-    ftrl = FTRL(dim=d, l1=0.1, l2=0.1, alpha=0.1, beta=1e-8)
+    ftrl = FTRL(dim=d, l1=0.001, l2=0.1, alpha=0.1, beta=1e-8)
     all_loss, all_step = ftrl.training(trainSet,  max_itr=100000)
     w = ftrl.w
     print(w)

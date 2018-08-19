@@ -55,9 +55,9 @@ class FTRL(object):
         y_hat = self.predict(x)
         g = self.decisionFunc.grad(y, y_hat, x)
 
-        self.q = self.beta2 * self.q + (1-self.beta2) * g*g
+        self.q = self.beta2 * self.q + (1-self.beta2) * (g*g)
         eta_t = self.alpha / (np.sqrt(step))
-        dt = (1- np.power(self.beta1,step+1) / eta_t) * (np.sqrt(self.q / (1- np.power(self.beta2,step))) + self.epsilon)
+        dt = (1 - np.power(self.beta1, step) / eta_t) * (np.sqrt(self.q / (1 - np.power(self.beta2, step))) + self.epsilon )
         #FTRL: sigma = (np.sqrt(self.q + g*g) - np.sqrt(self.q)) / self.alpha
         sigma = dt - self.beta1 * self.d
         self.d = dt
@@ -89,7 +89,7 @@ if __name__ ==  '__main__':
 
     d = 4
     trainSet = np.loadtxt('Data/FTRLtrain.txt')
-    ftrl = FTRL(dim=d, l1=0.1, l2=0.1, alpha=0.1, epsilon=1e-8, beta1=0.9, beta2=0.99)
+    ftrl = FTRL(dim=d, l1=0.001, l2=0.1, alpha=0.1, epsilon=0.01, beta1=0.6, beta2=0.999)
     all_loss, all_step = ftrl.training(trainSet,  max_itr=100000)
     w = ftrl.w
     print(w)
