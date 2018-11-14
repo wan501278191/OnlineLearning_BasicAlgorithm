@@ -46,7 +46,7 @@ class FTRL(object):
 
     def update(self, x, y):
         self.w = np.array([0 if np.abs(self.z[i]) <= self.l1
-                             else (np.sign(self.z[i] * self.l1) * self.l1 - self.z[i]) / (self.l2 + (self.beta + np.sqrt(self.q[i]))/self.alpha)
+                             else (np.sign(self.z[i]) * self.l1 - self.z[i]) / (self.l2 + (self.beta + np.sqrt(self.q[i]))/self.alpha)
                              for i in range(self.dim)])
 
         y_hat = self.predict(x)
